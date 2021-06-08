@@ -1,0 +1,83 @@
+<div class="container">
+  <header class="jumbotron">
+    <p>{{ content }}</p>
+  </header>
+
+  <div *ngIf="hasAccess">
+    <div class="col-md-12">
+      <div class="card card-container">
+        <form
+          name="form"
+          (ngSubmit)="f.form.valid && onSubmit()"
+          #f="ngForm"
+          novalidate
+        >
+        <div class="form-group">
+          <label for="animalname">Animal Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="animalname"
+            [(ngModel)]="form.username"
+            required
+            minlength="2"
+            maxlength="20"
+            #animalname="ngModel"
+          />
+
+            <div class="alert-danger" *ngIf="animalname.errors && f.submitted">
+              <div *ngIf="animalname.errors.required">Animal name is required</div>
+              <div *ngIf="animalname.errors.minlength">
+                Animal Name must be at least 2 characters
+              </div>
+              <div *ngIf="animalname.errors.maxlength">
+                Animal Name must be at most 20 characters
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea rows="2" cols="25"
+              placeholder="Put a description of the animal you're donating here."
+              type="text"
+              class="form-control"
+              name="description"
+              [(ngModel)]="form.description"
+              required
+              minlength="10"
+              #description="ngModel"
+            ></textarea>
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="description.errors && f.submitted"
+            >
+              <div *ngIf="description.errors.required">A description is required</div>
+              <div *ngIf="description.errors.minlength">
+                Description must be at least 10 characters
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary btn-block">
+              List Animal
+            </button>
+          </div>
+          <div class="form-group">
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="f.submitted && isListingFailed"
+            >
+              Listing Failed: {{ errorMessage }}
+            </div>
+          </div>
+        </form>
+    
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
